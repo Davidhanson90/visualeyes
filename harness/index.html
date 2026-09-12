@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>visualeyes harness</title>
+  <style>
+    html, body { margin: 0; background: #070b14; color: #e8eef7; font-family: system-ui, sans-serif; }
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1 { margin: 0 0 8px; font-size: 1.6rem; }
+    p { opacity: 0.8; margin-top: 0; }
+    .controls { display: flex; gap: 8px; margin: 16px 0 20px; flex-wrap: wrap; }
+    button { background: #1b2a44; color: #e8eef7; border: 1px solid #335; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+    button:hover { background: #243552; }
+    #noise { min-height: 40px; opacity: 0.5; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>visualeyes harness</h1>
+    <p>Live browser performance metrics with Lit charts.</p>
+    <div class="controls">
+      <button id="btn-fetch">Fire fetch burst</button>
+      <button id="btn-block">Block UI thread (200ms)</button>
+      <button id="btn-dom">Inflate DOM</button>
+      <button id="btn-stop">Stop tracker</button>
+      <button id="btn-start">Start tracker</button>
+    </div>
+    <visualeyes-dashboard id="dash"></visualeyes-dashboard>
+    <div id="noise"></div>
+  </main>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
