@@ -2,7 +2,8 @@ import { LitElement, html, nothing } from "lit";
 import type { MetricName, MetricPoint, Snapshot } from "../core/types.js";
 import type { VisualeyesTracker } from "../core/tracker.js";
 import { getDefaultTracker } from "../core/tracker.js";
-import { dashboardStyles } from "./styles.js";
+import { dashboardStyles, themeStyles } from "./styles.js";
+import type { VisualeyesTheme } from "./theme.js";
 import "./visualeyes-chart.js";
 
 interface Panel {
@@ -49,13 +50,15 @@ function fmtBytes(v: number | undefined): string {
 export class VisualeyesDashboard extends LitElement {
   static properties = {
     tracker: { attribute: false },
-    snapshot: { state: true }
+    snapshot: { state: true },
+    theme: { type: String, reflect: true }
   };
 
   declare tracker: VisualeyesTracker | null;
   declare private snapshot: Snapshot | null;
+  declare theme: VisualeyesTheme;
 
-  static styles = dashboardStyles;
+  static styles = [themeStyles, dashboardStyles];
 
   private unsubscribe: (() => void) | null = null;
 
@@ -63,6 +66,7 @@ export class VisualeyesDashboard extends LitElement {
     super();
     this.tracker = null;
     this.snapshot = null;
+    this.theme = "dark";
   }
 
   connectedCallback(): void {
@@ -112,7 +116,7 @@ export class VisualeyesDashboard extends LitElement {
           <div class="panel">
             <h2>${p.title}</h2>
             <div class="value">${p.format(this.latest(p.metric))}</div>
-            <visualeyes-chart .data=${this.series(p.metric)} color=${p.color}></visualeyes-chart>
+            <visualeyes-chart .data=${this.series(p.metric)} color=${p.color} theme=${this.theme}></visualeyes-chart>
           </div>
         `
         )}

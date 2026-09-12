@@ -19,6 +19,8 @@ export {
 } from "./core/tracker.js";
 export { VisualeyesChart } from "./components/visualeyes-chart.js";
 export { VisualeyesDashboard } from "./components/visualeyes-dashboard.js";
+export type { VisualeyesTheme } from "./components/theme.js";
+export { THEME_VARS } from "./components/theme.js";
 
 // Register Lit custom elements as a side effect of importing the package.
 import "./components/visualeyes-chart.js";

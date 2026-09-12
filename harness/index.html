@@ -1,17 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>visualeyes harness</title>
   <style>
-    html, body { margin: 0; background: #070b14; color: #e8eef7; font-family: system-ui, sans-serif; }
+    :root {
+      --page-bg: #070b14;
+      --page-text: #e8eef7;
+      --btn-bg: #1b2a44;
+      --btn-border: #335577;
+      --btn-hover: #243552;
+    }
+    :root[data-theme="light"] {
+      --page-bg: #e6ebf2;
+      --page-text: #1a2433;
+      --btn-bg: #ffffff;
+      --btn-border: #c5d0de;
+      --btn-hover: #eef2f7;
+    }
+    @media (prefers-color-scheme: light) {
+      :root[data-theme="auto"] {
+        --page-bg: #e6ebf2;
+        --page-text: #1a2433;
+        --btn-bg: #ffffff;
+        --btn-border: #c5d0de;
+        --btn-hover: #eef2f7;
+      }
+    }
+    html, body { margin: 0; background: var(--page-bg); color: var(--page-text); font-family: system-ui, sans-serif; }
     main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
     h1 { margin: 0 0 8px; font-size: 1.6rem; }
     p { opacity: 0.8; margin-top: 0; }
-    .controls { display: flex; gap: 8px; margin: 16px 0 20px; flex-wrap: wrap; }
-    button { background: #1b2a44; color: #e8eef7; border: 1px solid #335; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
-    button:hover { background: #243552; }
+    .controls { display: flex; gap: 8px; margin: 16px 0 20px; flex-wrap: wrap; align-items: center; }
+    button, select { background: var(--btn-bg); color: var(--page-text); border: 1px solid var(--btn-border); border-radius: 8px; padding: 8px 12px; cursor: pointer; font: inherit; }
+    button:hover, select:hover { background: var(--btn-hover); }
+    .theme-control { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
     #noise { min-height: 40px; opacity: 0.5; font-size: 12px; }
   </style>
 </head>
@@ -25,8 +49,16 @@
       <button id="btn-dom">Inflate DOM</button>
       <button id="btn-stop">Stop tracker</button>
       <button id="btn-start">Start tracker</button>
+      <label class="theme-control">
+        Theme
+        <select id="theme-select" aria-label="Dashboard theme">
+          <option value="dark" selected>Dark</option>
+          <option value="light">Light</option>
+          <option value="auto">Auto</option>
+        </select>
+      </label>
     </div>
-    <visualeyes-dashboard id="dash"></visualeyes-dashboard>
+    <visualeyes-dashboard id="dash" theme="dark"></visualeyes-dashboard>
     <div id="noise"></div>
   </main>
   <script type="module" src="./main.ts"></script>

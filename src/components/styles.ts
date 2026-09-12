@@ -1,11 +1,55 @@
 import { css } from 'lit';
 
+/**
+ * Dark tokens match the original 0.1.0 look. Light tokens apply for
+ * `theme="light"` and, when the OS prefers light, `theme="auto"`.
+ */
+const lightTokens = css`
+  --visualeyes-bg: #f3f5f8;
+  --visualeyes-text: #1a2433;
+  --visualeyes-muted: #5c6d82;
+  --visualeyes-title: #3d5270;
+  --visualeyes-panel-bg: #ffffff;
+  --visualeyes-panel-border: #d3dce8;
+  --visualeyes-chart-bg: #e8eef6;
+  --visualeyes-grid: #c9d4e4;
+  --visualeyes-status: #5c6d82;
+  --visualeyes-empty: #7a8b9e;
+  --visualeyes-accent: #2563eb;
+`;
+
+export const themeStyles = css`
+  :host {
+    --visualeyes-bg: #0b1220;
+    --visualeyes-text: #e8eef7;
+    --visualeyes-muted: #8b9bb0;
+    --visualeyes-title: #9fb3c8;
+    --visualeyes-panel-bg: #121a2b;
+    --visualeyes-panel-border: #243149;
+    --visualeyes-chart-bg: #0d1524;
+    --visualeyes-grid: #1c2940;
+    --visualeyes-status: #9fb3c8;
+    --visualeyes-empty: #4a5a70;
+    --visualeyes-accent: #5b9cff;
+  }
+
+  :host([theme="light"]) {
+    ${lightTokens}
+  }
+
+  @media (prefers-color-scheme: light) {
+    :host([theme="auto"]) {
+      ${lightTokens}
+    }
+  }
+`;
+
 export const dashboardStyles = css`
   :host {
     display: block;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    color: #e8eef7;
-    background: #0b1220;
+    color: var(--visualeyes-text);
+    background: var(--visualeyes-bg);
     border-radius: 12px;
     padding: 16px;
     box-sizing: border-box;
@@ -25,7 +69,7 @@ export const dashboardStyles = css`
   }
   .status {
     font-size: 0.8rem;
-    opacity: 0.75;
+    color: var(--visualeyes-status);
   }
   .grid {
     display: grid;
@@ -33,8 +77,8 @@ export const dashboardStyles = css`
     gap: 12px;
   }
   .panel {
-    background: #121a2b;
-    border: 1px solid #243149;
+    background: var(--visualeyes-panel-bg);
+    border: 1px solid var(--visualeyes-panel-border);
     border-radius: 10px;
     padding: 10px 12px 8px;
   }
@@ -42,7 +86,7 @@ export const dashboardStyles = css`
     margin: 0 0 6px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #9fb3c8;
+    color: var(--visualeyes-title);
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
@@ -51,7 +95,7 @@ export const dashboardStyles = css`
     font-weight: 650;
     margin-bottom: 6px;
   }
-  .muted { opacity: 0.55; font-size: 0.75rem; }
+  .muted { color: var(--visualeyes-muted); font-size: 0.75rem; }
 `;
 
 export const chartStyles = css`
@@ -64,6 +108,6 @@ export const chartStyles = css`
     height: 120px;
     display: block;
     border-radius: 6px;
-    background: #0d1524;
+    background: var(--visualeyes-chart-bg);
   }
 `;
