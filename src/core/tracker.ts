@@ -1,5 +1,6 @@
 import type { Collector, CollectorOptions, SnapshotListener, TrackerOptions } from './types.js';
 import { MetricStore } from './store.js';
+import { ResourceStore, type ResourceListener, type ResourceTimingRow } from './resources.js';
 import { createHttpCollector } from '../collectors/http.js';
 import { createLongTasksCollector } from '../collectors/long-tasks.js';
 import { createDomCollector } from '../collectors/dom.js';
@@ -10,6 +11,7 @@ import { createLoafCollector } from '../collectors/loaf.js';
 import { createConnectionCollector } from '../collectors/connection.js';
 import { createNavigationCollector } from '../collectors/navigation.js';
 import { createErrorsCollector } from '../collectors/errors.js';
+import { createResourcesWaterfallCollector } from '../collectors/resources-waterfall.js';
 
 const DEFAULT_COLLECTORS: Required<CollectorOptions> = {
   http: true,
@@ -22,10 +24,12 @@ const DEFAULT_COLLECTORS: Required<CollectorOptions> = {
   connection: true,
   navigation: true,
   errors: true,
+  resources: true,
 };
 
 export class VisualeyesTracker {
   private store: MetricStore;
+  private resourceStore: ResourceStore;
   private collectors: Collector[] = [];
   private sampleIntervalMs: number;
   private timer: ReturnType<typeof setInterval> | null = null;
@@ -35,7 +39,12 @@ export class VisualeyesTracker {
   constructor(options: TrackerOptions = {}) {
     this.options = options;
     this.sampleIntervalMs = options.sampleIntervalMs ?? 1000;
-    this.store = new MetricStore(options.retentionMs ?? 5 * 60 * 1000);
+    const retentionMs = options.retentionMs ?? 5 * 60 * 1000;
+    this.store = new MetricStore(retentionMs);
+    this.resourceStore = new ResourceStore({
+      retentionMs,
+      maxEntries: options.maxResourceEntries ?? 150,
+    });
   }
 
   start(): void {
@@ -87,6 +96,25 @@ export class VisualeyesTracker {
     return this.store;
   }
 
+  /** Current resource timing rows for the waterfall panel. */
+  getResources(): ResourceTimingRow[] {
+    return this.resourceStore.getResources();
+  }
+
+  /** Subscribe to resource waterfall updates. */
+  subscribeResources(listener: ResourceListener): () => void {
+    return this.resourceStore.subscribe(listener);
+  }
+
+  /** Clear the resource waterfall buffer (e.g. after a soft navigation). */
+  clearResources(): void {
+    this.resourceStore.clear();
+  }
+
+  getFirstPartyDomains(): string[] {
+    return this.options.firstPartyDomains ?? [];
+  }
+
   private tick(): void {
     const ctx = this.createContext();
     for (const c of this.collectors) {
@@ -124,6 +152,15 @@ export class VisualeyesTracker {
     if (flags.connection) list.push(createConnectionCollector());
     if (flags.navigation) list.push(createNavigationCollector());
     if (flags.errors) list.push(createErrorsCollector());
+    if (flags.resources) {
+      list.push(
+        createResourcesWaterfallCollector({
+          store: this.resourceStore,
+          firstPartyDomains: this.options.firstPartyDomains ?? [],
+          clearOnSoftNav: true,
+        })
+      );
+    }
     return list;
   }
 }

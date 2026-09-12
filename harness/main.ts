@@ -3,6 +3,8 @@ import { createTracker, type VisualeyesTracker } from "../dist/index.js";
 const tracker = createTracker({
   sampleIntervalMs: 1000,
   retentionMs: 5 * 60 * 1000,
+  firstPartyDomains: [],
+  maxResourceEntries: 150,
   collectors: {
     http: true,
     longTasks: true,
@@ -13,7 +15,8 @@ const tracker = createTracker({
     loaf: true,
     connection: true,
     navigation: true,
-    errors: true
+    errors: true,
+    resources: true
   }
 });
 
@@ -29,7 +32,9 @@ document.getElementById("btn-fetch")?.addEventListener("click", async () => {
   const urls = [
     "https://httpbin.org/bytes/1024",
     "https://httpbin.org/bytes/2048",
-    "https://httpbin.org/delay/1"
+    "https://httpbin.org/bytes/4096",
+    "https://httpbin.org/delay/1",
+    "https://httpbin.org/json"
   ];
   await Promise.allSettled(urls.map((u) => fetch(u, { mode: "cors" }).catch(() => null)));
 });

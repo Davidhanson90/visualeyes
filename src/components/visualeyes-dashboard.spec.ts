@@ -50,6 +50,16 @@ describe("VisualeyesDashboard theme", () => {
     }
   });
 
+  it("embeds waterfall and forwards theme", async () => {
+    const el = new VisualeyesDashboard();
+    mount(el);
+    el.theme = "light";
+    await el.updateComplete;
+    const wf = el.shadowRoot?.querySelector("visualeyes-waterfall");
+    expect(wf).toBeTruthy();
+    expect(wf?.getAttribute("theme")).toBe("light");
+  });
+
   it("defines documented theme tokens for dark, light, and auto", () => {
     const cssText = themeStyles.cssText;
     expect(cssText).toContain(`${THEME_VARS.bg}: #0b1220`);

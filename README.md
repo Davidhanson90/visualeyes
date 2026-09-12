@@ -23,7 +23,7 @@ Then open the local URL shown in your terminal (Vite default is usually `http://
 
 - ESM package output with TypeScript declarations
 - Tracker API for HTTP, long tasks, DOM, web vitals, memory, FPS, resources, LoAF, connection, navigation, and errors
-- Reusable `<visualeyes-dashboard>` and `<visualeyes-chart>` web components
+- Reusable `<visualeyes-dashboard>`, `<visualeyes-chart>`, and `<visualeyes-waterfall>` web components
 - Dark / light / auto theming via a `theme` attribute and `--visualeyes-*` CSS variables
 - Soft-failing collectors when browser APIs are unavailable
 
@@ -93,6 +93,48 @@ tracker.stop();
 ```
 
 
+
+### 5. Resource waterfall
+
+`<visualeyes-waterfall>` renders a horizontal Resource Timing timeline (one row per resource). It is included under the metric grid on `<visualeyes-dashboard>`, and can also be used standalone:
+
+```html
+<visualeyes-waterfall id="wf" theme="dark"></visualeyes-waterfall>
+```
+
+```ts
+const tracker = createTracker({
+  firstPartyDomains: ["static.example.com"], // optional allow-list (page host is always 1st-party)
+  maxResourceEntries: 150
+});
+tracker.start();
+
+const wf = document.getElementById("wf");
+if (wf) {
+  wf.tracker = tracker;
+  wf.theme = "dark";
+  // optional: wf.firstPartyDomains = ["static.example.com"];
+}
+```
+
+**Legend**
+
+| Visual | Meaning |
+| --- | --- |
+| Blue / purple / green / coral / gold / gray bars | Initiator: script, css/link, img, fetch/xhr, font, other |
+| Striped bar | Third-party host |
+| Light outline on bar | Cached heuristic (`transferSize === 0` with encoded/decoded body size) |
+
+Hover a row (native `title` tooltip) for URL, type, duration, size, 1p/3p, and cached.
+
+```ts
+tracker.getResources();           // ResourceTimingRow[]
+tracker.subscribeResources(cb); // unsubscribe function
+tracker.clearResources();         // clear rolling buffer
+```
+
+Collector flag: `collectors.resources` (default `true`). Soft-fails when `PerformanceObserver` / Resource Timing is unavailable. Buffer clears best-effort on soft navigations (`soft-navigations` observer + `popstate`).
+
 ## Theming
 
 `visualeyes` ships two built-in visual themes — **dark** and **light** — plus **auto** to follow the OS.
@@ -111,7 +153,7 @@ tracker.stop();
 | `light` | Full light palette |
 | `auto` | Uses light when the OS prefers light (`prefers-color-scheme: light`), otherwise dark |
 
-Both `<visualeyes-dashboard>` and `<visualeyes-chart>` accept a reflected `theme` attribute/property. The dashboard forwards `theme` to nested charts so canvas colors stay in sync.
+`<visualeyes-dashboard>`, `<visualeyes-chart>`, and `<visualeyes-waterfall>` accept a reflected `theme` attribute/property. The dashboard forwards `theme` to nested charts and the waterfall so colors stay in sync.
 
 ### How to enable a theme
 
