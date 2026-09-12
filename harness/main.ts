@@ -9,7 +9,11 @@ const tracker = createTracker({
     dom: true,
     webVitals: true,
     memory: true,
-    fps: true
+    fps: true,
+    loaf: true,
+    connection: true,
+    navigation: true,
+    errors: true
   }
 });
 
@@ -45,6 +49,22 @@ document.getElementById("btn-dom")?.addEventListener("click", () => {
     el.textContent = "·";
     noise.appendChild(el);
   }
+});
+
+document.getElementById("btn-soft-nav")?.addEventListener("click", () => {
+  const next = `#soft-${Date.now()}`;
+  history.pushState({ visualeyes: true }, "", next);
+});
+
+document.getElementById("btn-error")?.addEventListener("click", () => {
+  // Fire a caught-by-window error without breaking the harness page.
+  setTimeout(() => {
+    throw new Error("visualeyes harness deliberate error");
+  }, 0);
+});
+
+document.getElementById("btn-reject")?.addEventListener("click", () => {
+  void Promise.reject(new Error("visualeyes harness deliberate rejection"));
 });
 
 const themeSelect = document.getElementById("theme-select") as HTMLSelectElement | null;

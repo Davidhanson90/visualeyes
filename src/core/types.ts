@@ -16,7 +16,19 @@ export type MetricName =
   | 'resourceScript'
   | 'resourceCss'
   | 'resourceImg'
-  | 'resourceFetch';
+  | 'resourceFetch'
+  | 'loafDuration'
+  | 'loafScriptDuration'
+  | 'loafStyleDuration'
+  | 'connectionRtt'
+  | 'connectionDownlink'
+  | 'connectionEffectiveType'
+  | 'navDomContentLoaded'
+  | 'navLoad'
+  | 'softNavCount'
+  | 'softNavDuration'
+  | 'errorCount'
+  | 'rejectionCount';
 
 export interface MetricPoint {
   t: number;
@@ -40,6 +52,10 @@ export interface CollectorOptions {
   webVitals?: boolean;
   memory?: boolean;
   fps?: boolean;
+  loaf?: boolean;
+  connection?: boolean;
+  navigation?: boolean;
+  errors?: boolean;
 }
 
 export interface TrackerOptions {
@@ -78,4 +94,16 @@ export const ALL_METRIC_NAMES: MetricName[] = [
   'resourceCss',
   'resourceImg',
   'resourceFetch',
+  'loafDuration',
+  'loafScriptDuration',
+  'loafStyleDuration',
+  'connectionRtt',
+  'connectionDownlink',
+  'connectionEffectiveType',
+  'navDomContentLoaded',
+  'navLoad',
+  'softNavCount',
+  'softNavDuration',
+  'errorCount',
+  'rejectionCount',
 ];

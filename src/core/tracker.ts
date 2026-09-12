@@ -6,6 +6,10 @@ import { createDomCollector } from '../collectors/dom.js';
 import { createWebVitalsCollector } from '../collectors/web-vitals.js';
 import { createMemoryCollector } from '../collectors/memory.js';
 import { createFpsCollector } from '../collectors/fps.js';
+import { createLoafCollector } from '../collectors/loaf.js';
+import { createConnectionCollector } from '../collectors/connection.js';
+import { createNavigationCollector } from '../collectors/navigation.js';
+import { createErrorsCollector } from '../collectors/errors.js';
 
 const DEFAULT_COLLECTORS: Required<CollectorOptions> = {
   http: true,
@@ -14,6 +18,10 @@ const DEFAULT_COLLECTORS: Required<CollectorOptions> = {
   webVitals: true,
   memory: true,
   fps: true,
+  loaf: true,
+  connection: true,
+  navigation: true,
+  errors: true,
 };
 
 export class VisualeyesTracker {
@@ -95,9 +103,9 @@ export class VisualeyesTracker {
 
   private createContext() {
     return {
-      push: (name: Parameters<MetricStore["push"]>[0], value: number, time?: number) =>
+      push: (name: Parameters<MetricStore['push']>[0], value: number, time?: number) =>
         this.store.push(name, value, time),
-      setGauge: (name: Parameters<MetricStore["setGauge"]>[0], value: number) =>
+      setGauge: (name: Parameters<MetricStore['setGauge']>[0], value: number) =>
         this.store.setGauge(name, value),
       now: () => Date.now(),
     };
@@ -112,6 +120,10 @@ export class VisualeyesTracker {
     if (flags.webVitals) list.push(createWebVitalsCollector());
     if (flags.memory) list.push(createMemoryCollector());
     if (flags.fps) list.push(createFpsCollector());
+    if (flags.loaf) list.push(createLoafCollector());
+    if (flags.connection) list.push(createConnectionCollector());
+    if (flags.navigation) list.push(createNavigationCollector());
+    if (flags.errors) list.push(createErrorsCollector());
     return list;
   }
 }
