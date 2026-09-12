@@ -5,7 +5,8 @@ import {
   VisualeyesTracker,
   createTracker,
   VisualeyesChart,
-  VisualeyesDashboard
+  VisualeyesDashboard,
+  THEME_VARS
 } from "./index.js";
 
 describe("package exports", () => {
@@ -17,6 +18,8 @@ describe("package exports", () => {
     expect(createTracker).toBeTypeOf("function");
     expect(VisualeyesChart).toBeTypeOf("function");
     expect(VisualeyesDashboard).toBeTypeOf("function");
+    expect(THEME_VARS.bg).toBe("--visualeyes-bg");
+    expect(THEME_VARS.accent).toBe("--visualeyes-accent");
   });
 
   it("registers custom elements on import", () => {

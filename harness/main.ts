@@ -47,6 +47,16 @@ document.getElementById("btn-dom")?.addEventListener("click", () => {
   }
 });
 
+const themeSelect = document.getElementById("theme-select") as HTMLSelectElement | null;
+const applyTheme = (theme: string): void => {
+  dash?.setAttribute("theme", theme);
+  document.documentElement.dataset.theme = theme;
+};
+themeSelect?.addEventListener("change", () => {
+  applyTheme(themeSelect.value);
+});
+applyTheme(themeSelect?.value ?? "dark");
+
 // gentle background load so charts move
 setInterval(() => {
   void fetch("data:text/plain,ping").catch(() => undefined);

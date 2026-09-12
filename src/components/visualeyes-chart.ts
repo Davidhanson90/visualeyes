@@ -1,29 +1,56 @@
 import { LitElement, html } from "lit";
 import type { MetricPoint } from "../core/types.js";
-import { chartStyles } from "./styles.js";
+import { chartStyles, themeStyles } from "./styles.js";
+import { THEME_VARS, readThemeColor, type VisualeyesTheme } from "./theme.js";
 
 export class VisualeyesChart extends LitElement {
   static properties = {
     data: { attribute: false },
     color: { type: String },
-    height: { type: Number }
+    height: { type: Number },
+    theme: { type: String, reflect: true }
   };
 
   declare data: MetricPoint[];
   declare color: string;
   declare height: number;
+  declare theme: VisualeyesTheme;
 
-  static styles = chartStyles;
+  static styles = [themeStyles, chartStyles];
+
+  private schemeQuery: MediaQueryList | null = null;
+  private readonly onSchemeChange = (): void => {
+    this.draw();
+  };
 
   constructor() {
     super();
     this.data = [];
-    this.color = "#5b9cff";
+    this.color = "";
     this.height = 120;
+    this.theme = "dark";
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    if (typeof window.matchMedia === "function") {
+      this.schemeQuery = window.matchMedia("(prefers-color-scheme: light)");
+      this.schemeQuery.addEventListener("change", this.onSchemeChange);
+    }
+  }
+
+  disconnectedCallback(): void {
+    this.schemeQuery?.removeEventListener("change", this.onSchemeChange);
+    this.schemeQuery = null;
+    super.disconnectedCallback();
   }
 
   protected updated(): void {
     this.draw();
+  }
+
+  private themeColor(name: string, fallback: string): string {
+    return readThemeColor(this, name, fallback);
   }
 
   private draw(): void {
@@ -37,11 +64,18 @@ export class VisualeyesChart extends LitElement {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, width, height);
+
+    const bg = this.themeColor(THEME_VARS.chartBg, "#0d1524");
+    const grid = this.themeColor(THEME_VARS.grid, "#1c2940");
+    const empty = this.themeColor(THEME_VARS.empty, "#4a5a70");
+    const series = this.color || this.themeColor(THEME_VARS.accent, "#5b9cff");
+
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, width, height);
 
     const pts = this.data;
     if (!pts.length) {
-      ctx.fillStyle = "#4a5a70";
+      ctx.fillStyle = empty;
       ctx.font = "12px sans-serif";
       ctx.fillText("No data yet", 10, height / 2);
       return;
@@ -62,7 +96,7 @@ export class VisualeyesChart extends LitElement {
     const span = Math.max(1, t1 - t0);
 
     // grid
-    ctx.strokeStyle = "#1c2940";
+    ctx.strokeStyle = grid;
     ctx.lineWidth = 1;
     for (let i = 0; i < 3; i++) {
       const y = pad + (h * i) / 2;
@@ -85,7 +119,7 @@ export class VisualeyesChart extends LitElement {
     ctx.lineTo(pad + ((last.t - t0) / span) * w, pad + h);
     ctx.lineTo(pad + ((first.t - t0) / span) * w, pad + h);
     ctx.closePath();
-    ctx.fillStyle = this.color + "33";
+    ctx.fillStyle = series + "33";
     ctx.fill();
 
     // line
@@ -96,7 +130,7 @@ export class VisualeyesChart extends LitElement {
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    ctx.strokeStyle = this.color;
+    ctx.strokeStyle = series;
     ctx.lineWidth = 2;
     ctx.lineJoin = "round";
     ctx.stroke();

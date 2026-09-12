@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Theming for `<visualeyes-dashboard>` and `<visualeyes-chart>` via a reflected `theme` attribute (`dark`, `light`, `auto`).
+- `--visualeyes-*` CSS custom properties on `:host` (background, text, muted, title, panel, chart, grid, status, empty, accent) with a dark default matching 0.1.0 and a full light palette.
+- Chart canvas colors (background, grid, empty text, default series) read from computed CSS variables.
+- Harness theme toggle (dark / light / auto).
+
 ## 0.1.0
 
 ### Added
