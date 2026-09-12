@@ -22,7 +22,7 @@ Then open the local URL shown in your terminal (Vite default is usually `http://
 ## Features
 
 - ESM package output with TypeScript declarations
-- Tracker API for HTTP, long tasks, DOM, web vitals, memory, FPS, and resources
+- Tracker API for HTTP, long tasks, DOM, web vitals, memory, FPS, resources, LoAF, connection, navigation, and errors
 - Reusable `<visualeyes-dashboard>` and `<visualeyes-chart>` web components
 - Dark / light / auto theming via a `theme` attribute and `--visualeyes-*` CSS variables
 - Soft-failing collectors when browser APIs are unavailable
@@ -55,7 +55,11 @@ const tracker = createTracker({
     dom: true,
     webVitals: true,
     memory: true,
-    fps: true
+    fps: true,
+    loaf: true,
+    connection: true,
+    navigation: true,
+    errors: true
   }
 });
 
@@ -185,6 +189,11 @@ Canvas drawing reads these via `getComputedStyle` (background, grid, empty-state
 - `jsHeapUsed` / `jsHeapLimit` — `performance.memory` when present
 - `fps` — requestAnimationFrame
 - `resourceScript` / `resourceCss` / `resourceImg` / `resourceFetch` — resource counts
+- `loafDuration` / `loafScriptDuration` / `loafStyleDuration` — Long Animation Frames (`PerformanceObserver` type `long-animation-frame`; Chromium)
+- `connectionRtt` / `connectionDownlink` / `connectionEffectiveType` — Network Information API (`navigator.connection`; effectiveType ordinal 0–4)
+- `navDomContentLoaded` / `navLoad` — Navigation Timing (hard navigation)
+- `softNavCount` / `softNavDuration` — soft navigations via `soft-navigations` observer and `history` / `popstate` hooks
+- `errorCount` / `rejectionCount` — cumulative `window` `error` and `unhandledrejection` counts
 
 ## Scripts
 

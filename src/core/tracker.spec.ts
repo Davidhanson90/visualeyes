@@ -16,7 +16,7 @@ describe("createTracker", () => {
   it("starts and stops, registers as default", () => {
     const tracker = createTracker({
       sampleIntervalMs: 1000,
-      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     expect(getDefaultTracker()).toBe(tracker);
     tracker.start();
@@ -28,7 +28,7 @@ describe("createTracker", () => {
   it("emits snapshots on interval", () => {
     const tracker = createTracker({
       sampleIntervalMs: 500,
-      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     const spy = vi.fn();
     tracker.subscribe(spy);
@@ -42,7 +42,7 @@ describe("createTracker", () => {
 
   it("getSnapshot returns store data", () => {
     const tracker = createTracker({
-      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     tracker.getStore().push("fps", 60);
     const snap = tracker.getSnapshot();
@@ -52,7 +52,7 @@ describe("createTracker", () => {
 
   it("start is idempotent", () => {
     const tracker = createTracker({
-      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     tracker.start();
     tracker.start();
@@ -72,7 +72,7 @@ describe("createTracker", () => {
   it("dom collector sample path exercises context helpers", () => {
     const tracker = createTracker({
       sampleIntervalMs: 200,
-      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: true, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     tracker.start();
     vi.advanceTimersByTime(200);
@@ -96,7 +96,7 @@ describe("createTracker", () => {
     };
     const tracker = createTracker({
       sampleIntervalMs: 100,
-      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     (tracker as unknown as { buildCollectors: () => Collector[] }).buildCollectors = () => [boom];
     expect(() => tracker.start()).not.toThrow();
@@ -117,7 +117,7 @@ describe("createTracker", () => {
     };
     const tracker = new VisualeyesTracker({
       sampleIntervalMs: 1000,
-      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false }
+      collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false }
     });
     (tracker as unknown as { buildCollectors: () => Collector[] }).buildCollectors = () => [probe];
     tracker.start();

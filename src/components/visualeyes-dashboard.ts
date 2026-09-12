@@ -25,7 +25,15 @@ const panels: Panel[] = [
   { title: "TTFB (ms)", metric: "ttfb", color: "#118ab2", format: fmtMs },
   { title: "JS heap used", metric: "jsHeapUsed", color: "#f4a261", format: fmtBytes },
   { title: "FPS", metric: "fps", color: "#2a9d8f", format: fmtInt },
-  { title: "Resources (script)", metric: "resourceScript", color: "#8ecae6", format: fmtInt }
+  { title: "Resources (script)", metric: "resourceScript", color: "#8ecae6", format: fmtInt },
+  { title: "LoAF duration (ms)", metric: "loafDuration", color: "#e76f51", format: fmtMs },
+  { title: "Connection RTT (ms)", metric: "connectionRtt", color: "#457b9d", format: fmtMs },
+  { title: "Downlink (Mb/s)", metric: "connectionDownlink", color: "#1d3557", format: fmtFloat },
+  { title: "Nav DCL (ms)", metric: "navDomContentLoaded", color: "#a8dadc", format: fmtMs },
+  { title: "Nav load (ms)", metric: "navLoad", color: "#457b9d", format: fmtMs },
+  { title: "Soft navigations", metric: "softNavCount", color: "#f4a261", format: fmtInt },
+  { title: "Errors", metric: "errorCount", color: "#e63946", format: fmtInt },
+  { title: "Unhandled rejections", metric: "rejectionCount", color: "#d62828", format: fmtInt }
 ];
 
 function fmtInt(v: number | undefined): string {
