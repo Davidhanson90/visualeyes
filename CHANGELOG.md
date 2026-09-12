@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **Resource waterfall** — rolling Resource Timing buffer (`getResources` / `subscribeResources` / `clearResources`), `<visualeyes-waterfall>` Lit panel (timeline bars, initiator + 1p/3p + cached legend), embedded under the dashboard grid
+- Tracker options `firstPartyDomains`, `maxResourceEntries`; collector flag `collectors.resources` (default on)
 - v0.2 collectors (default on, soft-fail when APIs are missing):
   - **LoAF** — `loafDuration`, `loafScriptDuration`, `loafStyleDuration` via `long-animation-frame`
   - **Connection** — `connectionRtt`, `connectionDownlink`, `connectionEffectiveType` from `navigator.connection`

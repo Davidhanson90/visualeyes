@@ -5,6 +5,7 @@ import { getDefaultTracker } from "../core/tracker.js";
 import { dashboardStyles, themeStyles } from "./styles.js";
 import type { VisualeyesTheme } from "./theme.js";
 import "./visualeyes-chart.js";
+import "./visualeyes-waterfall.js";
 
 interface Panel {
   title: string;
@@ -128,6 +129,13 @@ export class VisualeyesDashboard extends LitElement {
           </div>
         `
         )}
+      </div>
+      <div class="waterfall">
+        <visualeyes-waterfall
+          .tracker=${this.tracker ?? getDefaultTracker()}
+          .firstPartyDomains=${(this.tracker ?? getDefaultTracker())?.getFirstPartyDomains() ?? []}
+          theme=${this.theme}
+        ></visualeyes-waterfall>
       </div>
     `;
   }

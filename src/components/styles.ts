@@ -96,6 +96,9 @@ export const dashboardStyles = css`
     margin-bottom: 6px;
   }
   .muted { color: var(--visualeyes-muted); font-size: 0.75rem; }
+  .waterfall {
+    margin-top: 12px;
+  }
 `;
 
 export const chartStyles = css`

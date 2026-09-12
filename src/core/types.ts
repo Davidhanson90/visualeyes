@@ -56,12 +56,18 @@ export interface CollectorOptions {
   connection?: boolean;
   navigation?: boolean;
   errors?: boolean;
+  /** Resource Timing waterfall buffer (default on). */
+  resources?: boolean;
 }
 
 export interface TrackerOptions {
   sampleIntervalMs?: number;
   retentionMs?: number;
   collectors?: CollectorOptions;
+  /** Domains treated as first-party in the resource waterfall (plus page host). */
+  firstPartyDomains?: string[];
+  /** Max resource waterfall rows retained (default 150). */
+  maxResourceEntries?: number;
 }
 
 export interface CollectorContext {
