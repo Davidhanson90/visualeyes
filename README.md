@@ -91,27 +91,66 @@ tracker.stop();
 
 ## Theming
 
-Both `<visualeyes-dashboard>` and `<visualeyes-chart>` accept a reflected `theme` attribute/property:
+`visualeyes` ships two built-in visual themes — **dark** and **light** — plus **auto** to follow the OS.
+
+### Theme previews
+
+| Dark (`theme="dark"`) | Light (`theme="light"`) |
+| --- | --- |
+| ![Dark theme dashboard](assets/theme-dark.png) | ![Light theme dashboard](assets/theme-light.png) |
+
+### Theme options
 
 | Value | Result |
 | --- | --- |
-| unset / `dark` | Dark palette (original 0.1.0 look) |
+| unset / `dark` | Dark palette (default, original 0.1.0 look) |
 | `light` | Full light palette |
-| `auto` | Light palette when `@media (prefers-color-scheme: light)` matches, otherwise dark |
+| `auto` | Uses light when the OS prefers light (`prefers-color-scheme: light`), otherwise dark |
+
+Both `<visualeyes-dashboard>` and `<visualeyes-chart>` accept a reflected `theme` attribute/property. The dashboard forwards `theme` to nested charts so canvas colors stay in sync.
+
+### How to enable a theme
+
+**Option A — HTML attribute (simplest)**
 
 ```html
+<!-- Dark (default if omitted) -->
+<visualeyes-dashboard theme="dark"></visualeyes-dashboard>
+
+<!-- Light -->
 <visualeyes-dashboard theme="light"></visualeyes-dashboard>
-<visualeyes-chart theme="auto"></visualeyes-chart>
+
+<!-- Follow the user's OS preference -->
+<visualeyes-dashboard theme="auto"></visualeyes-dashboard>
 ```
+
+**Option B — JavaScript property**
 
 ```ts
+import { createTracker } from "visualeyes";
+
+const tracker = createTracker();
+tracker.start();
+
 const dash = document.querySelector("visualeyes-dashboard");
-if (dash) dash.theme = "auto";
+if (dash) {
+  dash.tracker = tracker;
+  dash.theme = "light"; // or "dark" | "auto"
+}
 ```
 
-The dashboard forwards `theme` to each nested chart so canvas colors stay in sync. Canvas drawing reads computed CSS variables via `getComputedStyle` (background, grid, empty-state text, and the default series color when `color` is unset).
+**Option C — Try it in the harness**
 
-Tokens live on `:host` and can be overridden per instance:
+```bash
+npm install
+npm start
+```
+
+Open the local URL, then use the **Theme** dropdown (Dark / Light / Auto) in the toolbar. That sets `theme` on the dashboard live.
+
+### Customizing colors
+
+Tokens live on `:host` and can be overridden per instance (works with any theme):
 
 ```html
 <visualeyes-dashboard
@@ -134,7 +173,7 @@ Tokens live on `:host` and can be overridden per instance:
 | `--visualeyes-empty` | Empty-chart label | `#4a5a70` | `#7a8b9e` |
 | `--visualeyes-accent` | Default series color | `#5b9cff` | `#2563eb` |
 
-The local harness (`npm start`) has a Dark / Light / Auto theme toggle that sets `theme` on the dashboard.
+Canvas drawing reads these via `getComputedStyle` (background, grid, empty-state text, and the default series color when `color` is unset).
 
 ## Metrics
 
