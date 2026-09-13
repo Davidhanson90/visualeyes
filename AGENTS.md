@@ -12,7 +12,7 @@ This repository supports human contributors and coding agents.
 
 1. Do not edit `dist/` directly.
 2. Keep the package ESM-compatible.
-3. Preserve `visualeyes-dashboard` and `visualeyes-chart` component selectors unless intentionally changing API.
+3. Preserve `pagepulse-dashboard` and `pagepulse-chart` component selectors unless intentionally changing API.
 4. Prefer additive, backward-compatible API changes.
 5. Run `npm run build:verify` before proposing completion.
 

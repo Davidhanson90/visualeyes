@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing to `visualeyes`.
+Thanks for contributing to `pagepulse`.
 
 ## Requirements
 

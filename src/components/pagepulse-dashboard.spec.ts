@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
-import { VisualeyesDashboard } from "./visualeyes-dashboard.js";
+import { PagepulseDashboard } from "./pagepulse-dashboard.js";
 import { themeStyles } from "./styles.js";
 import { THEME_VARS } from "./theme.js";
 
@@ -21,9 +21,9 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("VisualeyesDashboard metric titles", () => {
+describe("PagepulseDashboard metric titles", () => {
   it("exposes a short description on each panel title for hover help", async () => {
-    const el = new VisualeyesDashboard();
+    const el = new PagepulseDashboard();
     mount(el);
     await el.updateComplete;
     const titles = el.shadowRoot?.querySelectorAll("h2.metric-title") ?? [];
@@ -35,9 +35,9 @@ describe("VisualeyesDashboard metric titles", () => {
   });
 });
 
-describe("VisualeyesDashboard theme", () => {
+describe("PagepulseDashboard theme", () => {
   it("defaults to dark and reflects the theme attribute", async () => {
-    const el = new VisualeyesDashboard();
+    const el = new PagepulseDashboard();
     mount(el);
     await el.updateComplete;
     expect(el.theme).toBe("dark");
@@ -53,11 +53,11 @@ describe("VisualeyesDashboard theme", () => {
   });
 
   it("passes theme through to child charts", async () => {
-    const el = new VisualeyesDashboard();
+    const el = new PagepulseDashboard();
     mount(el);
     el.theme = "light";
     await el.updateComplete;
-    const charts = el.shadowRoot?.querySelectorAll("visualeyes-chart") ?? [];
+    const charts = el.shadowRoot?.querySelectorAll("pagepulse-chart") ?? [];
     expect(charts.length).toBeGreaterThan(0);
     for (const chart of charts) {
       expect(chart.getAttribute("theme")).toBe("light");
@@ -65,11 +65,11 @@ describe("VisualeyesDashboard theme", () => {
   });
 
   it("embeds waterfall and forwards theme", async () => {
-    const el = new VisualeyesDashboard();
+    const el = new PagepulseDashboard();
     mount(el);
     el.theme = "light";
     await el.updateComplete;
-    const wf = el.shadowRoot?.querySelector("visualeyes-waterfall");
+    const wf = el.shadowRoot?.querySelector("pagepulse-waterfall");
     expect(wf).toBeTruthy();
     expect(wf?.getAttribute("theme")).toBe("light");
   });

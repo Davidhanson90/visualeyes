@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
-import { VisualeyesWaterfall } from "./visualeyes-waterfall.js";
+import { PagepulseWaterfall } from "./pagepulse-waterfall.js";
 import { createTracker, setDefaultTracker } from "../core/tracker.js";
 
 const mounted: HTMLElement[] = [];
@@ -21,9 +21,9 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("VisualeyesWaterfall theme", () => {
+describe("PagepulseWaterfall theme", () => {
   it("defaults to dark and reflects theme", async () => {
-    const el = new VisualeyesWaterfall();
+    const el = new PagepulseWaterfall();
     mount(el);
     await el.updateComplete;
     expect(el.theme).toBe("dark");
@@ -35,7 +35,7 @@ describe("VisualeyesWaterfall theme", () => {
   });
 
   it("renders legend and empty state", async () => {
-    const el = new VisualeyesWaterfall();
+    const el = new PagepulseWaterfall();
     mount(el);
     await el.updateComplete;
     const root = el.shadowRoot!;
@@ -79,7 +79,7 @@ describe("VisualeyesWaterfall theme", () => {
       recordedAt: Date.now()
     });
 
-    const el = new VisualeyesWaterfall();
+    const el = new PagepulseWaterfall();
     el.tracker = tracker;
     mount(el);
     await el.updateComplete;

@@ -1,9 +1,9 @@
 import { LitElement, html } from "lit";
 import type { MetricPoint } from "../core/types.js";
 import { chartStyles, themeStyles } from "./styles.js";
-import { THEME_VARS, readThemeColor, type VisualeyesTheme } from "./theme.js";
+import { THEME_VARS, readThemeColor, type PagepulseTheme } from "./theme.js";
 
-export class VisualeyesChart extends LitElement {
+export class PagepulseChart extends LitElement {
   static properties = {
     data: { attribute: false },
     color: { type: String },
@@ -14,7 +14,7 @@ export class VisualeyesChart extends LitElement {
   declare data: MetricPoint[];
   declare color: string;
   declare height: number;
-  declare theme: VisualeyesTheme;
+  declare theme: PagepulseTheme;
 
   static styles = [themeStyles, chartStyles];
 
@@ -141,12 +141,12 @@ export class VisualeyesChart extends LitElement {
   }
 }
 
-if (typeof customElements !== "undefined" && !customElements.get("visualeyes-chart")) {
-  customElements.define("visualeyes-chart", VisualeyesChart);
+if (typeof customElements !== "undefined" && !customElements.get("pagepulse-chart")) {
+  customElements.define("pagepulse-chart", PagepulseChart);
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "visualeyes-chart": VisualeyesChart;
+    "pagepulse-chart": PagepulseChart;
   }
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { createTracker, getDefaultTracker, setDefaultTracker, VisualeyesTracker } from "./tracker.js";
+import { createTracker, getDefaultTracker, setDefaultTracker, PagepulseTracker } from "./tracker.js";
 import { MetricStore } from "./store.js";
 import type { Collector } from "./types.js";
 
@@ -115,7 +115,7 @@ describe("createTracker", () => {
         /* noop */
       }
     };
-    const tracker = new VisualeyesTracker({
+    const tracker = new PagepulseTracker({
       sampleIntervalMs: 1000,
       collectors: { http: false, longTasks: false, dom: false, webVitals: false, memory: false, fps: false, loaf: false, connection: false, navigation: false, errors: false, resources: false }
     });

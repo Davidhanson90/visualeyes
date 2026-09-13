@@ -1,5 +1,5 @@
 {
-  "name": "visualeyes",
+  "name": "pagepulse",
   "version": "0.1.0",
   "description": "Browser performance metrics tracker with Lit web components for live graphs.",
   "type": "module",
@@ -42,12 +42,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Davidhanson90/visualeyes.git"
+    "url": "https://github.com/Davidhanson90/pagepulse.git"
   },
   "bugs": {
-    "url": "https://github.com/Davidhanson90/visualeyes/issues"
+    "url": "https://github.com/Davidhanson90/pagepulse/issues"
   },
-  "homepage": "https://github.com/Davidhanson90/visualeyes#readme",
+  "homepage": "https://github.com/Davidhanson90/pagepulse#readme",
   "author": "",
   "license": "MIT",
   "engines": {

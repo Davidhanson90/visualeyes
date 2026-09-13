@@ -1,9 +1,9 @@
 import { LitElement, html, nothing, css } from "lit";
 import type { ResourceTimingRow } from "../core/resources.js";
-import type { VisualeyesTracker } from "../core/tracker.js";
+import type { PagepulseTracker } from "../core/tracker.js";
 import { getDefaultTracker } from "../core/tracker.js";
 import { themeStyles } from "./styles.js";
-import type { VisualeyesTheme } from "./theme.js";
+import type { PagepulseTheme } from "./theme.js";
 
 /** Colors by initiator type (legend). */
 const INITIATOR_COLORS: Record<string, string> = {
@@ -67,11 +67,11 @@ const waterfallStyles = css`
     display: block;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
       sans-serif;
-    color: var(--visualeyes-text);
+    color: var(--pagepulse-text);
   }
   .panel {
-    background: var(--visualeyes-panel-bg);
-    border: 1px solid var(--visualeyes-panel-border);
+    background: var(--pagepulse-panel-bg);
+    border: 1px solid var(--pagepulse-panel-border);
     border-radius: 10px;
     padding: 10px 12px 12px;
   }
@@ -87,13 +87,13 @@ const waterfallStyles = css`
     margin: 0;
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--visualeyes-title);
+    color: var(--pagepulse-title);
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
   .meta {
     font-size: 0.75rem;
-    color: var(--visualeyes-muted);
+    color: var(--pagepulse-muted);
   }
   .legend {
     display: flex;
@@ -101,7 +101,7 @@ const waterfallStyles = css`
     gap: 10px 14px;
     margin-bottom: 10px;
     font-size: 0.72rem;
-    color: var(--visualeyes-muted);
+    color: var(--pagepulse-muted);
   }
   .legend-item {
     display: inline-flex;
@@ -115,7 +115,7 @@ const waterfallStyles = css`
     flex-shrink: 0;
   }
   .swatch.third {
-    outline: 1px dashed var(--visualeyes-muted);
+    outline: 1px dashed var(--pagepulse-muted);
     outline-offset: 1px;
     opacity: 0.85;
   }
@@ -125,7 +125,7 @@ const waterfallStyles = css`
     gap: 3px;
     max-height: 320px;
     overflow: auto;
-    background: var(--visualeyes-chart-bg);
+    background: var(--pagepulse-chart-bg);
     border-radius: 6px;
     padding: 6px;
   }
@@ -138,7 +138,7 @@ const waterfallStyles = css`
   }
   .label {
     font-size: 0.7rem;
-    color: var(--visualeyes-muted);
+    color: var(--pagepulse-muted);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -171,7 +171,7 @@ const waterfallStyles = css`
   }
   .empty {
     font-size: 0.8rem;
-    color: var(--visualeyes-empty);
+    color: var(--pagepulse-empty);
     padding: 16px 8px;
     text-align: center;
   }
@@ -179,7 +179,7 @@ const waterfallStyles = css`
     display: flex;
     justify-content: space-between;
     font-size: 0.65rem;
-    color: var(--visualeyes-muted);
+    color: var(--pagepulse-muted);
     margin-top: 4px;
     padding-left: calc(160px + 8px);
   }
@@ -193,7 +193,7 @@ const waterfallStyles = css`
   }
 `;
 
-export class VisualeyesWaterfall extends LitElement {
+export class PagepulseWaterfall extends LitElement {
   static properties = {
     tracker: { attribute: false },
     resources: { state: true },
@@ -201,9 +201,9 @@ export class VisualeyesWaterfall extends LitElement {
     firstPartyDomains: { attribute: false }
   };
 
-  declare tracker: VisualeyesTracker | null;
+  declare tracker: PagepulseTracker | null;
   declare private resources: ResourceTimingRow[];
-  declare theme: VisualeyesTheme;
+  declare theme: PagepulseTheme;
   declare firstPartyDomains: string[];
 
   static styles = [themeStyles, waterfallStyles];
@@ -282,13 +282,13 @@ export class VisualeyesWaterfall extends LitElement {
             `
           )}
           <span class="legend-item">
-            <span class="swatch third" style="background:var(--visualeyes-muted)"></span>
+            <span class="swatch third" style="background:var(--pagepulse-muted)"></span>
             3rd party (striped)
           </span>
           <span class="legend-item">
             <span
               class="swatch cached"
-              style="background:var(--visualeyes-accent);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5)"
+              style="background:var(--pagepulse-accent);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5)"
             ></span>
             cached (outline)
           </span>
@@ -335,12 +335,12 @@ export class VisualeyesWaterfall extends LitElement {
   }
 }
 
-if (typeof customElements !== "undefined" && !customElements.get("visualeyes-waterfall")) {
-  customElements.define("visualeyes-waterfall", VisualeyesWaterfall);
+if (typeof customElements !== "undefined" && !customElements.get("pagepulse-waterfall")) {
+  customElements.define("pagepulse-waterfall", PagepulseWaterfall);
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "visualeyes-waterfall": VisualeyesWaterfall;
+    "pagepulse-waterfall": PagepulseWaterfall;
   }
 }

@@ -27,7 +27,7 @@ const DEFAULT_COLLECTORS: Required<CollectorOptions> = {
   resources: true,
 };
 
-export class VisualeyesTracker {
+export class PagepulseTracker {
   private store: MetricStore;
   private resourceStore: ResourceStore;
   private collectors: Collector[] = [];
@@ -165,18 +165,18 @@ export class VisualeyesTracker {
   }
 }
 
-let defaultTracker: VisualeyesTracker | null = null;
+let defaultTracker: PagepulseTracker | null = null;
 
-export function createTracker(options?: TrackerOptions): VisualeyesTracker {
-  const tracker = new VisualeyesTracker(options);
+export function createTracker(options?: TrackerOptions): PagepulseTracker {
+  const tracker = new PagepulseTracker(options);
   defaultTracker = tracker;
   return tracker;
 }
 
-export function getDefaultTracker(): VisualeyesTracker | null {
+export function getDefaultTracker(): PagepulseTracker | null {
   return defaultTracker;
 }
 
-export function setDefaultTracker(tracker: VisualeyesTracker | null): void {
+export function setDefaultTracker(tracker: PagepulseTracker | null): void {
   defaultTracker = tracker;
 }

@@ -2,11 +2,11 @@ import { describe, it, expect } from "vitest";
 import {
   ALL_METRIC_NAMES,
   MetricStore,
-  VisualeyesTracker,
+  PagepulseTracker,
   createTracker,
-  VisualeyesChart,
-  VisualeyesDashboard,
-  VisualeyesWaterfall,
+  PagepulseChart,
+  PagepulseDashboard,
+  PagepulseWaterfall,
   ResourceStore,
   isFirstParty,
   THEME_VARS
@@ -17,20 +17,20 @@ describe("package exports", () => {
     expect(ALL_METRIC_NAMES.length).toBeGreaterThan(5);
     expect(ALL_METRIC_NAMES).toContain("fps");
     expect(MetricStore).toBeTypeOf("function");
-    expect(VisualeyesTracker).toBeTypeOf("function");
+    expect(PagepulseTracker).toBeTypeOf("function");
     expect(createTracker).toBeTypeOf("function");
-    expect(VisualeyesChart).toBeTypeOf("function");
-    expect(VisualeyesDashboard).toBeTypeOf("function");
-    expect(VisualeyesWaterfall).toBeTypeOf("function");
+    expect(PagepulseChart).toBeTypeOf("function");
+    expect(PagepulseDashboard).toBeTypeOf("function");
+    expect(PagepulseWaterfall).toBeTypeOf("function");
     expect(ResourceStore).toBeTypeOf("function");
     expect(isFirstParty).toBeTypeOf("function");
-    expect(THEME_VARS.bg).toBe("--visualeyes-bg");
-    expect(THEME_VARS.accent).toBe("--visualeyes-accent");
+    expect(THEME_VARS.bg).toBe("--pagepulse-bg");
+    expect(THEME_VARS.accent).toBe("--pagepulse-accent");
   });
 
   it("registers custom elements on import", () => {
-    expect(customElements.get("visualeyes-chart")).toBe(VisualeyesChart);
-    expect(customElements.get("visualeyes-dashboard")).toBe(VisualeyesDashboard);
-    expect(customElements.get("visualeyes-waterfall")).toBe(VisualeyesWaterfall);
+    expect(customElements.get("pagepulse-chart")).toBe(PagepulseChart);
+    expect(customElements.get("pagepulse-dashboard")).toBe(PagepulseDashboard);
+    expect(customElements.get("pagepulse-waterfall")).toBe(PagepulseWaterfall);
   });
 });

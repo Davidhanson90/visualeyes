@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
-import { VisualeyesChart } from "./visualeyes-chart.js";
+import { PagepulseChart } from "./pagepulse-chart.js";
 import { readThemeColor, THEME_VARS } from "./theme.js";
 
 const mounted: HTMLElement[] = [];
@@ -20,9 +20,9 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("VisualeyesChart theme", () => {
+describe("PagepulseChart theme", () => {
   it("defaults to dark and reflects the theme attribute", async () => {
-    const el = new VisualeyesChart();
+    const el = new PagepulseChart();
     mount(el);
     await el.updateComplete;
     expect(el.theme).toBe("dark");
@@ -36,7 +36,7 @@ describe("VisualeyesChart theme", () => {
   it("readThemeColor falls back when a variable is missing", () => {
     const el = document.createElement("div");
     mount(el);
-    expect(readThemeColor(el, "--visualeyes-missing", "#abc")).toBe("#abc");
+    expect(readThemeColor(el, "--pagepulse-missing", "#abc")).toBe("#abc");
   });
 
   it("readThemeColor uses a set custom property", () => {

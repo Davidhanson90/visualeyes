@@ -1,4 +1,4 @@
-import { createTracker, type VisualeyesTracker } from "../dist/index.js";
+import { createTracker, type PagepulseTracker } from "../dist/index.js";
 
 const tracker = createTracker({
   sampleIntervalMs: 1000,
@@ -20,7 +20,7 @@ const tracker = createTracker({
   }
 });
 
-const dash = document.getElementById("dash") as (HTMLElement & { tracker?: VisualeyesTracker }) | null;
+const dash = document.getElementById("dash") as (HTMLElement & { tracker?: PagepulseTracker }) | null;
 if (dash) dash.tracker = tracker;
 
 tracker.start();
@@ -58,18 +58,18 @@ document.getElementById("btn-dom")?.addEventListener("click", () => {
 
 document.getElementById("btn-soft-nav")?.addEventListener("click", () => {
   const next = `#soft-${Date.now()}`;
-  history.pushState({ visualeyes: true }, "", next);
+  history.pushState({ pagepulse: true }, "", next);
 });
 
 document.getElementById("btn-error")?.addEventListener("click", () => {
   // Fire a caught-by-window error without breaking the harness page.
   setTimeout(() => {
-    throw new Error("visualeyes harness deliberate error");
+    throw new Error("pagepulse harness deliberate error");
   }, 0);
 });
 
 document.getElementById("btn-reject")?.addEventListener("click", () => {
-  void Promise.reject(new Error("visualeyes harness deliberate rejection"));
+  void Promise.reject(new Error("pagepulse harness deliberate rejection"));
 });
 
 const themeSelect = document.getElementById("theme-select") as HTMLSelectElement | null;

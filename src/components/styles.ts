@@ -5,32 +5,32 @@ import { css } from 'lit';
  * `theme="light"` and, when the OS prefers light, `theme="auto"`.
  */
 const lightTokens = css`
-  --visualeyes-bg: #f3f5f8;
-  --visualeyes-text: #1a2433;
-  --visualeyes-muted: #5c6d82;
-  --visualeyes-title: #3d5270;
-  --visualeyes-panel-bg: #ffffff;
-  --visualeyes-panel-border: #d3dce8;
-  --visualeyes-chart-bg: #e8eef6;
-  --visualeyes-grid: #c9d4e4;
-  --visualeyes-status: #5c6d82;
-  --visualeyes-empty: #7a8b9e;
-  --visualeyes-accent: #2563eb;
+  --pagepulse-bg: #f3f5f8;
+  --pagepulse-text: #1a2433;
+  --pagepulse-muted: #5c6d82;
+  --pagepulse-title: #3d5270;
+  --pagepulse-panel-bg: #ffffff;
+  --pagepulse-panel-border: #d3dce8;
+  --pagepulse-chart-bg: #e8eef6;
+  --pagepulse-grid: #c9d4e4;
+  --pagepulse-status: #5c6d82;
+  --pagepulse-empty: #7a8b9e;
+  --pagepulse-accent: #2563eb;
 `;
 
 export const themeStyles = css`
   :host {
-    --visualeyes-bg: #0b1220;
-    --visualeyes-text: #e8eef7;
-    --visualeyes-muted: #8b9bb0;
-    --visualeyes-title: #9fb3c8;
-    --visualeyes-panel-bg: #121a2b;
-    --visualeyes-panel-border: #243149;
-    --visualeyes-chart-bg: #0d1524;
-    --visualeyes-grid: #1c2940;
-    --visualeyes-status: #9fb3c8;
-    --visualeyes-empty: #4a5a70;
-    --visualeyes-accent: #5b9cff;
+    --pagepulse-bg: #0b1220;
+    --pagepulse-text: #e8eef7;
+    --pagepulse-muted: #8b9bb0;
+    --pagepulse-title: #9fb3c8;
+    --pagepulse-panel-bg: #121a2b;
+    --pagepulse-panel-border: #243149;
+    --pagepulse-chart-bg: #0d1524;
+    --pagepulse-grid: #1c2940;
+    --pagepulse-status: #9fb3c8;
+    --pagepulse-empty: #4a5a70;
+    --pagepulse-accent: #5b9cff;
   }
 
   :host([theme="light"]) {
@@ -48,8 +48,8 @@ export const dashboardStyles = css`
   :host {
     display: block;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    color: var(--visualeyes-text);
-    background: var(--visualeyes-bg);
+    color: var(--pagepulse-text);
+    background: var(--pagepulse-bg);
     border-radius: 12px;
     padding: 16px;
     box-sizing: border-box;
@@ -69,7 +69,7 @@ export const dashboardStyles = css`
   }
   .status {
     font-size: 0.8rem;
-    color: var(--visualeyes-status);
+    color: var(--pagepulse-status);
   }
   .grid {
     display: grid;
@@ -77,8 +77,8 @@ export const dashboardStyles = css`
     gap: 12px;
   }
   .panel {
-    background: var(--visualeyes-panel-bg);
-    border: 1px solid var(--visualeyes-panel-border);
+    background: var(--pagepulse-panel-bg);
+    border: 1px solid var(--pagepulse-panel-border);
     border-radius: 10px;
     padding: 10px 12px 8px;
   }
@@ -86,13 +86,13 @@ export const dashboardStyles = css`
     margin: 0 0 6px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--visualeyes-title, #9fb3c8);
+    color: var(--pagepulse-title, #9fb3c8);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     width: fit-content;
     max-width: 100%;
     cursor: help;
-    border-bottom: 1px dotted color-mix(in srgb, var(--visualeyes-title, #9fb3c8) 55%, transparent);
+    border-bottom: 1px dotted color-mix(in srgb, var(--pagepulse-title, #9fb3c8) 55%, transparent);
     position: relative;
   }
   .panel h2.metric-title:hover::after,
@@ -106,9 +106,9 @@ export const dashboardStyles = css`
     max-width: min(280px, 70vw);
     padding: 8px 10px;
     border-radius: 8px;
-    background: var(--visualeyes-panel-bg, #121a2b);
-    color: var(--visualeyes-text, #e8eef7);
-    border: 1px solid var(--visualeyes-panel-border, #243149);
+    background: var(--pagepulse-panel-bg, #121a2b);
+    color: var(--pagepulse-text, #e8eef7);
+    border: 1px solid var(--pagepulse-panel-border, #243149);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     font-size: 0.72rem;
     font-weight: 500;
@@ -123,7 +123,7 @@ export const dashboardStyles = css`
     font-weight: 650;
     margin-bottom: 6px;
   }
-  .muted { color: var(--visualeyes-muted); font-size: 0.75rem; }
+  .muted { color: var(--pagepulse-muted); font-size: 0.75rem; }
   .waterfall {
     margin-top: 12px;
   }
@@ -139,6 +139,6 @@ export const chartStyles = css`
     height: 120px;
     display: block;
     border-radius: 6px;
-    background: var(--visualeyes-chart-bg);
+    background: var(--pagepulse-chart-bg);
   }
 `;

@@ -1,4 +1,4 @@
-/** Shared types for visualeyes */
+/** Shared types for pagepulse */
 
 export type MetricName =
   | 'httpInFlight'

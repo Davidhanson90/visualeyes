@@ -1,12 +1,12 @@
 import { LitElement, html, nothing } from "lit";
 import type { MetricName, MetricPoint, Snapshot } from "../core/types.js";
-import type { VisualeyesTracker } from "../core/tracker.js";
+import type { PagepulseTracker } from "../core/tracker.js";
 import { getDefaultTracker } from "../core/tracker.js";
 import { dashboardStyles, themeStyles } from "./styles.js";
-import type { VisualeyesTheme } from "./theme.js";
+import type { PagepulseTheme } from "./theme.js";
 import { describeMetric } from "./metric-info.js";
-import "./visualeyes-chart.js";
-import "./visualeyes-waterfall.js";
+import "./pagepulse-chart.js";
+import "./pagepulse-waterfall.js";
 
 interface Panel {
   title: string;
@@ -58,16 +58,16 @@ function fmtBytes(v: number | undefined): string {
   return `${(v / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-export class VisualeyesDashboard extends LitElement {
+export class PagepulseDashboard extends LitElement {
   static properties = {
     tracker: { attribute: false },
     snapshot: { state: true },
     theme: { type: String, reflect: true }
   };
 
-  declare tracker: VisualeyesTracker | null;
+  declare tracker: PagepulseTracker | null;
   declare private snapshot: Snapshot | null;
-  declare theme: VisualeyesTheme;
+  declare theme: PagepulseTheme;
 
   static styles = [themeStyles, dashboardStyles];
 
@@ -118,7 +118,7 @@ export class VisualeyesDashboard extends LitElement {
     const running = (this.tracker ?? getDefaultTracker())?.isRunning() ?? false;
     return html`
       <header>
-        <h1>visualeyes</h1>
+        <h1>pagepulse</h1>
         <div class="status">${running ? "live" : "idle"} · ${this.snapshot ? new Date(this.snapshot.timestamp).toLocaleTimeString() : nothing}</div>
       </header>
       <div class="grid">
@@ -127,28 +127,28 @@ export class VisualeyesDashboard extends LitElement {
           <div class="panel">
             <h2 class="metric-title" title=${p.description} data-tip=${p.description}>${p.title}</h2>
             <div class="value">${p.format(this.latest(p.metric))}</div>
-            <visualeyes-chart .data=${this.series(p.metric)} color=${p.color} theme=${this.theme}></visualeyes-chart>
+            <pagepulse-chart .data=${this.series(p.metric)} color=${p.color} theme=${this.theme}></pagepulse-chart>
           </div>
         `
         )}
       </div>
       <div class="waterfall">
-        <visualeyes-waterfall
+        <pagepulse-waterfall
           .tracker=${this.tracker ?? getDefaultTracker()}
           .firstPartyDomains=${(this.tracker ?? getDefaultTracker())?.getFirstPartyDomains() ?? []}
           theme=${this.theme}
-        ></visualeyes-waterfall>
+        ></pagepulse-waterfall>
       </div>
     `;
   }
 }
 
-if (typeof customElements !== "undefined" && !customElements.get("visualeyes-dashboard")) {
-  customElements.define("visualeyes-dashboard", VisualeyesDashboard);
+if (typeof customElements !== "undefined" && !customElements.get("pagepulse-dashboard")) {
+  customElements.define("pagepulse-dashboard", PagepulseDashboard);
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "visualeyes-dashboard": VisualeyesDashboard;
+    "pagepulse-dashboard": PagepulseDashboard;
   }
 }
