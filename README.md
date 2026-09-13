@@ -10,7 +10,9 @@
 
 ## Try the Demo
 
-To run the harness locally:
+**Live demo:** <https://davidhanson90.github.io/visualeyes/>
+
+Or run the harness locally:
 
 ```bash
 npm install
