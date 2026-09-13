@@ -4,18 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-### Changed
-
-- **Renamed project from `visualeyes` to `pagepulse`** (package name, public classes/components, custom elements, CSS variables, docs). Formerly known as visualeyes.
-
 ### Added
-
 
 - Hover descriptions on dashboard metric titles (native `title` + styled tooltip).
-
-
-### Added
-
 - **Resource waterfall** — rolling Resource Timing buffer (`getResources` / `subscribeResources` / `clearResources`), `<pagepulse-waterfall>` Lit panel (timeline bars, initiator + 1p/3p + cached legend), embedded under the dashboard grid
 - Tracker options `firstPartyDomains`, `maxResourceEntries`; collector flag `collectors.resources` (default on)
 - v0.2 collectors (default on, soft-fail when APIs are missing):
@@ -42,7 +33,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Initial release of `visualeyes` (since renamed to `pagepulse`), an ESM TypeScript library for browser performance tracking.
-- `createTracker` / `VisualeyesTracker` API with collectors for HTTP, long tasks, DOM complexity, web vitals, memory, FPS, and resource counts.
-- Lit web components `<visualeyes-dashboard>` and `<visualeyes-chart>` registered on package import.
+- Initial release of `pagepulse`, an ESM TypeScript library for browser performance tracking.
+- `createTracker` / `PagepulseTracker` API with collectors for HTTP, long tasks, DOM complexity, web vitals, memory, FPS, and resource counts.
+- Lit web components `<pagepulse-dashboard>` and `<pagepulse-chart>` registered on package import.
 - Local Vite harness under `harness/` for interactive demos.
