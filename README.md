@@ -135,7 +135,12 @@ tracker.clearResources();         // clear rolling buffer
 
 Collector flag: `collectors.resources` (default `true`). Soft-fails when `PerformanceObserver` / Resource Timing is unavailable. Buffer clears best-effort on soft navigations (`soft-navigations` observer + `popstate`).
 
+## Metric title help
+
+Hover a dashboard panel title to see a short description of what that metric means. Descriptions also appear as the native browser tooltip via the `title` attribute.
+
 ## Theming
+
 
 `visualeyes` ships two built-in visual themes — **dark** and **light** — plus **auto** to follow the OS.
 

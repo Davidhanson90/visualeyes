@@ -82,13 +82,41 @@ export const dashboardStyles = css`
     border-radius: 10px;
     padding: 10px 12px 8px;
   }
-  .panel h2 {
+  .panel h2.metric-title {
     margin: 0 0 6px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--visualeyes-title);
+    color: var(--visualeyes-title, #9fb3c8);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    width: fit-content;
+    max-width: 100%;
+    cursor: help;
+    border-bottom: 1px dotted color-mix(in srgb, var(--visualeyes-title, #9fb3c8) 55%, transparent);
+    position: relative;
+  }
+  .panel h2.metric-title:hover::after,
+  .panel h2.metric-title:focus-visible::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 8px);
+    z-index: 5;
+    min-width: 180px;
+    max-width: min(280px, 70vw);
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--visualeyes-panel-bg, #121a2b);
+    color: var(--visualeyes-text, #e8eef7);
+    border: 1px solid var(--visualeyes-panel-border, #243149);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.35;
+    white-space: normal;
+    pointer-events: none;
   }
   .value {
     font-size: 1.25rem;

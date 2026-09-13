@@ -21,6 +21,20 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+describe("VisualeyesDashboard metric titles", () => {
+  it("exposes a short description on each panel title for hover help", async () => {
+    const el = new VisualeyesDashboard();
+    mount(el);
+    await el.updateComplete;
+    const titles = el.shadowRoot?.querySelectorAll("h2.metric-title") ?? [];
+    expect(titles.length).toBeGreaterThan(0);
+    for (const h2 of titles) {
+      const tip = h2.getAttribute("data-tip") || h2.getAttribute("title");
+      expect(tip && tip.length).toBeGreaterThan(10);
+    }
+  });
+});
+
 describe("VisualeyesDashboard theme", () => {
   it("defaults to dark and reflects the theme attribute", async () => {
     const el = new VisualeyesDashboard();
