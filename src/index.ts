@@ -34,3 +34,4 @@ export { THEME_VARS } from "./components/theme.js";
 import "./components/visualeyes-chart.js";
 import "./components/visualeyes-dashboard.js";
 import "./components/visualeyes-waterfall.js";
+export { METRIC_DESCRIPTIONS, describeMetric } from "./components/metric-info.js";
