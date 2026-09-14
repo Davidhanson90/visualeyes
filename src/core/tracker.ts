@@ -1,4 +1,5 @@
 import type { Collector, CollectorOptions, SnapshotListener, TrackerOptions } from './types.js';
+import { snapshotToTable, seriesToTable, resourcesToTable, type DataTable } from './data-table.js';
 import { MetricStore } from './store.js';
 import { ResourceStore, type ResourceListener, type ResourceTimingRow } from './resources.js';
 import { createHttpCollector } from '../collectors/http.js';
@@ -99,6 +100,21 @@ export class PagepulseTracker {
   /** Current resource timing rows for the waterfall panel. */
   getResources(): ResourceTimingRow[] {
     return this.resourceStore.getResources();
+  }
+
+  /** Latest gauges as a tabular payload (metric, latest, description, series). */
+  getDataTable(): DataTable {
+    return snapshotToTable(this.store.snapshot());
+  }
+
+  /** Full time-series as a long-form table (metric, t, v). */
+  getSeriesTable(): DataTable {
+    return seriesToTable(this.store.snapshot());
+  }
+
+  /** Resource waterfall rows as a flat table. */
+  getResourcesTable(): DataTable {
+    return resourcesToTable(this.resourceStore.getResources());
   }
 
   /** Subscribe to resource waterfall updates. */

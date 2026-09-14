@@ -25,7 +25,8 @@ Then open the local URL shown in your terminal (Vite default is usually `http://
 
 - ESM package output with TypeScript declarations
 - Tracker API for HTTP, long tasks, DOM, web vitals, memory, FPS, resources, LoAF, connection, navigation, and errors
-- Reusable `<pagepulse-dashboard>`, `<pagepulse-chart>`, and `<pagepulse-waterfall>` web components
+- Reusable `<pagepulse-dashboard>`, `<pagepulse-chart>`, `<pagepulse-waterfall>`, and `<pagepulse-data-table>` web components
+- Export latest gauges / time-series / resource rows as JSON or CSV (`downloadData`, `snapshotToTable`)
 - Dark / light / auto theming via a `theme` attribute and `--pagepulse-*` CSS variables
 - Soft-failing collectors when browser APIs are unavailable
 
@@ -137,6 +138,60 @@ tracker.clearResources();         // clear rolling buffer
 
 Collector flag: `collectors.resources` (default `true`). Soft-fails when `PerformanceObserver` / Resource Timing is unavailable. Buffer clears best-effort on soft navigations (`soft-navigations` observer + `popstate`).
 
+### 6. Raw data table & download
+
+Build tabular payloads from a snapshot (or directly from the tracker) and trigger a browser download:
+
+```ts
+import {
+  createTracker,
+  snapshotToTable,
+  seriesToTable,
+  resourcesToTable,
+  downloadData,
+  tableToCsv
+} from "pagepulse";
+
+const tracker = createTracker();
+tracker.start();
+
+const gauges = tracker.getDataTable();
+// { columns: ["metric","latest","description","pointCount","series"], rows: [...] }
+
+const series = tracker.getSeriesTable(); // long-form: metric, t, v
+const resources = tracker.getResourcesTable(); // Resource Timing rows
+
+downloadData(gauges, { format: "json", filename: "pagepulse-metrics.json" });
+downloadData(gauges, { format: "csv", filename: "pagepulse-metrics.csv" });
+
+// Or build from a Snapshot you already have:
+const snap = tracker.getSnapshot();
+snapshotToTable(snap);
+seriesToTable(snap);
+resourcesToTable(tracker.getResources());
+tableToCsv(gauges); // string
+```
+
+`downloadData` uses `Blob` + an object URL and soft-fails (returns `false`) when DOM download APIs are unavailable (e.g. Node). CSV requires a `DataTable` (`{ columns, rows }`); JSON accepts any serializable value.
+
+#### `<pagepulse-data-table>`
+
+```html
+<pagepulse-data-table id="raw" theme="dark"></pagepulse-data-table>
+```
+
+```ts
+const raw = document.getElementById("raw");
+if (raw) {
+  raw.tracker = tracker;
+  raw.theme = "dark"; // or "light" | "auto"
+}
+```
+
+The component shows a scrollable table of current metrics (name, latest value, description, point count, series JSON), with **Download JSON** / **Download CSV** buttons and a **Metrics / Resources** tab toggle. In the harness, enable **Show raw data table** in the toolbar.
+
+## Metric title help
+
 ## Metric title help
 
 Hover a dashboard panel title to see a short description of what that metric means. Descriptions also appear as the native browser tooltip via the `title` attribute.
@@ -160,7 +215,7 @@ Hover a dashboard panel title to see a short description of what that metric mea
 | `light` | Full light palette |
 | `auto` | Uses light when the OS prefers light (`prefers-color-scheme: light`), otherwise dark |
 
-`<pagepulse-dashboard>`, `<pagepulse-chart>`, and `<pagepulse-waterfall>` accept a reflected `theme` attribute/property. The dashboard forwards `theme` to nested charts and the waterfall so colors stay in sync.
+`<pagepulse-dashboard>`, `<pagepulse-chart>`, `<pagepulse-waterfall>`, and `<pagepulse-data-table>` accept a reflected `theme` attribute/property. The dashboard forwards `theme` to nested charts and the waterfall so colors stay in sync.
 
 ### How to enable a theme
 

@@ -23,6 +23,11 @@ const tracker = createTracker({
 const dash = document.getElementById("dash") as (HTMLElement & { tracker?: PagepulseTracker }) | null;
 if (dash) dash.tracker = tracker;
 
+const rawTable = document.getElementById("raw-table") as
+  | (HTMLElement & { tracker?: PagepulseTracker })
+  | null;
+if (rawTable) rawTable.tracker = tracker;
+
 tracker.start();
 
 document.getElementById("btn-start")?.addEventListener("click", () => tracker.start());
@@ -75,12 +80,20 @@ document.getElementById("btn-reject")?.addEventListener("click", () => {
 const themeSelect = document.getElementById("theme-select") as HTMLSelectElement | null;
 const applyTheme = (theme: string): void => {
   dash?.setAttribute("theme", theme);
+  rawTable?.setAttribute("theme", theme);
   document.documentElement.dataset.theme = theme;
 };
 themeSelect?.addEventListener("change", () => {
   applyTheme(themeSelect.value);
 });
 applyTheme(themeSelect?.value ?? "dark");
+
+const rawSection = document.getElementById("raw-section");
+const rawToggle = document.getElementById("toggle-raw-table") as HTMLInputElement | null;
+rawToggle?.addEventListener("change", () => {
+  if (!rawSection) return;
+  rawSection.hidden = !rawToggle.checked;
+});
 
 // gentle background load so charts move
 setInterval(() => {
