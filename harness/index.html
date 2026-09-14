@@ -35,14 +35,29 @@
     .controls { display: flex; gap: 8px; margin: 16px 0 20px; flex-wrap: wrap; align-items: center; }
     button, select { background: var(--btn-bg); color: var(--page-text); border: 1px solid var(--btn-border); border-radius: 8px; padding: 8px 12px; cursor: pointer; font: inherit; }
     button:hover, select:hover { background: var(--btn-hover); }
-    .theme-control { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+    .theme-control, .toggle-control { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+    .raw-section {
+      margin-top: 20px;
+      padding-top: 8px;
+      border-top: 1px dashed color-mix(in srgb, var(--page-text) 25%, transparent);
+    }
+    .raw-section[hidden] { display: none !important; }
+    .raw-section h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+    .raw-section .hint {
+      margin: 0 0 12px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
     #noise { min-height: 40px; opacity: 0.5; font-size: 12px; }
   </style>
 </head>
 <body>
   <main>
     <h1>pagepulse harness</h1>
-    <p>Live browser performance metrics with Lit charts and a resource waterfall. Use <strong>Fire fetch burst</strong> to populate waterfall rows.</p>
+    <p>Live browser performance metrics with Lit charts and a resource waterfall. Use <strong>Fire fetch burst</strong> to populate waterfall rows. Toggle <strong>Show raw data table</strong> to inspect / download metrics as JSON or CSV.</p>
     <div class="controls">
       <button id="btn-fetch">Fire fetch burst</button>
       <button id="btn-block">Block UI thread (200ms)</button>
@@ -60,8 +75,17 @@
           <option value="auto">Auto</option>
         </select>
       </label>
+      <label class="toggle-control">
+        <input type="checkbox" id="toggle-raw-table" />
+        Show raw data table
+      </label>
     </div>
     <pagepulse-dashboard id="dash" theme="dark"></pagepulse-dashboard>
+    <section id="raw-section" class="raw-section" hidden>
+      <h2>Raw performance data</h2>
+      <p class="hint">Scrollable metrics table with <strong>Download JSON</strong> / <strong>Download CSV</strong>. Switch to the Resources tab for waterfall rows.</p>
+      <pagepulse-data-table id="raw-table" theme="dark"></pagepulse-data-table>
+    </section>
     <div id="noise"></div>
   </main>
   <script type="module" src="./main.ts"></script>
